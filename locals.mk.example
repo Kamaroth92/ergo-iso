@@ -1,0 +1,9 @@
+BWS_ACCESS_TOKEN=
+
+# Double $ to cater for Makefile's escaping
+HARBOR_IMAGE_MIRROR_USERNAME=robot$$rke2
+HARBOR_IMAGE_MIRROR_REGISTRY=harbor.local
+HARBOR_IMAGE_MIRROR_PASSWORD=$(shell bws secret --access-token ${BWS_ACCESS_TOKEN} get <bw-secret-id> | jq -r .value)
+
+ADMINISTRATOR_USER_PASSWORD=$(shell bws secret get <bw-secret-id> | jq -r .value)
+ADMINISTRATOR_SSH_KEY=$(shell bws secret --access-token ${BWS_ACCESS_TOKEN} get <bw-secret-id> | jq -r .value)

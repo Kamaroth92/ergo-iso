@@ -1,0 +1,10 @@
+[Unit]
+Description=Provision ergo node based on json provisioning data
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/ergo/provisioner/ergo-provisioner.sh
+
+[Install]
+WantedBy=multi-user.target

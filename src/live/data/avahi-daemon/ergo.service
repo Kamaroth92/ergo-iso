@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+
+<service-group>
+  <name replace-wildcards="yes">Ergo - %h</name>
+  <service>
+    <type>_ergo._tcp</type>
+    <port>9433</port>
+  </service>
+</service-group>

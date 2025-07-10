@@ -1,0 +1,14 @@
+write-kubeconfig-mode: "0644"
+advertise-address: %IPADDRESS%
+tls-san:
+  - %VIPHOSTNAME%
+  - %VIPADDRESS%
+  - %IPADDRESS%
+cni: none
+etcd-expose-metrics: true
+kube-controller-manager-arg:
+  - bind-address=0.0.0.0
+kube-scheduler-arg:
+  - bind-address=0.0.0.0
+disable:
+  - rke2-ingress-nginx

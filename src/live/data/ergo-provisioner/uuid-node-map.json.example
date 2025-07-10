@@ -1,0 +1,55 @@
+{
+  "globals": {
+    "uuid": "",
+    "keepalivedVIPAddress": "192.168.10.40",
+    "keepalivedVirtualRouterID": 101,
+    "keepalivedPriority": 99,
+    "rke2InstallType": "server",
+    "rke2VIPHostName": "kubernetes.local",
+    "rke2Token": "<token>",
+    "rke2IsFirstNode": false,
+    "keepalivedInterface": "enp0s31f6",
+    "ipAddress": "",
+    "dnsSearchDomain": "lan.local",
+    "dnsIp": "192.168.10.10"
+  },
+  "nodes": {
+    "ergo-node-01": {
+      "uuid": "4c4c4544-004b-4210-8031-b4c04f474c32",
+      "ipAddress": "192.168.10.41",
+      "iotVlanAddress": "192.168.30.41"
+    },
+    "ergo-node-02": {
+      "uuid": "4c4c4544-0058-4410-8059-b4c04f464c32",
+      "ipAddress": "192.168.10.42",
+      "iotVlanAddress": "192.168.30.42"
+    },
+    "ergo-node-03": {
+      "uuid": "4c4c4544-0059-4a10-8054-c7c04f395032",
+      "ipAddress": "192.168.10.43",
+      "iotVlanAddress": "192.168.30.43"
+    },
+    "ergo-node-04": {
+      "uuid": "4c4c4544-0032-3810-8053-c8c04f395032",
+      "ipAddress": "192.168.10.44",
+      "iotVlanAddress": "192.168.30.44",
+      "rke2InstallType": "agent"
+    },
+    "test-vm-01": {
+      "uuid": "eaa653b6-073c-f14b-95ca-dc983c7df73c",
+      "keepalivedInterface": "enp0s3",
+      "keepalivedPriority": 100,
+      "keepalivedVIPAddress": "192.168.12.40",
+      "rke2InstallType": "server",
+      "rke2IsFirstNode": true,
+      "ipAddress": "192.168.10.231"
+    },
+    "test-vm-02": {
+      "uuid": "6929fec5-a51e-dc47-a7db-9d797f2b2451",
+      "keepalivedInterface": "enp0s3",
+      "keepalivedVIPAddress": "192.168.12.40",
+      "ipAddress": "192.168.10.232",
+      "rke2InstallType": "agent"
+    }
+  }
+}

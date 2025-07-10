@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "Welcome to %DISTRO_NAME% (%BUILD_TIME%)\n"

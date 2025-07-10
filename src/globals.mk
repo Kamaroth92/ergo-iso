@@ -1,0 +1,46 @@
+# Params
+RKE2_VERSION=v1.29.3-rc2+rke2r1
+
+# Customizable build variables
+DISTRO_CODE?=ergo
+DISTRO_VERSION?=v3.22
+DISTRO_NAME?=Ergo-$(DISTRO_VERSION)
+DISTRO_BASE_VERSION?=24.04
+DISTRO_ARCH?=amd64
+DISTRO_KERNEL_VERSION?=6.11.2
+
+# Apt
+LOCAL_APT_PROXY?=http://192.168.10.26:3142
+
+# Calculated variables
+DISTRO_EPOCH?=$(shell date +%s)
+DISTRO_DATE?=$(shell date +%Y%m%d)
+BUILD_TIME?=$(shell date +%y%m%d-%H%M)
+
+BUILD=build/$(DISTRO_CODE)/$(DISTRO_VERSION)/$(DISTRO_ARCH)
+COMMON=build/common
+
+# Commands
+CHROOT=env -i PATH=/usr/sbin:/usr/bin:/sbin:/bin chroot
+
+# ISO
+ISO=$(BUILD)/$(ISO_NAME).iso
+ISO_NAME?=$(DISTRO_CODE)_$(DISTRO_VERSION)_$(DISTRO_ARCH)
+CASPER_PATH=casper_$(ISO_NAME)
+
+SED=\
+	s|CASPER_PATH|$(CASPER_PATH)|g; \
+	s|DISTRO_NAME|$(DISTRO_NAME)|g; \
+	s|DISTRO_CODE|$(DISTRO_CODE)|g; \
+	s|DISTRO_VERSION|$(DISTRO_VERSION)|g; \
+	s|DISTRO_ARCH|$(DISTRO_ARCH)|g; \
+	s|DISTRO_DATE|$(DISTRO_DATE)|g; \
+	s|DISTRO_EPOCH|$(DISTRO_EPOCH)|g; \
+	s|DISTRO_PARAMS|$(DISTRO_PARAMS)|g; \
+	s|DISTRO_REPOS|$(DISTRO_REPOS)|g; \
+	s|DISTRO_PKGS|$(DISTRO_PKGS)|g; \
+	s|UBUNTU_CODE|$(UBUNTU_CODE)|g; \
+	s|UBUNTU_NAME|$(UBUNTU_NAME)|g; \
+	s|BUILD_TIME|$(BUILD_TIME)|g
+
+SUDO?=sudo

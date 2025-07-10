@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "To install %DISTRO_NAME% to disk run ./ergo-install"
