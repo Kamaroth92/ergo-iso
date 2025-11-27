@@ -1,6 +1,9 @@
 ifeq ($(DISTRO_BASE_VERSION),24.04)
 UBUNTU_CODE:=noble
 UBUNTU_NAME:=Noble Numbat
+else ifeq ($(DISTRO_BASE_VERSION),26.04)
+UBUNTU_CODE:=resolute
+UBUNTU_NAME:=Resolute Raccoon
 else
 $(error unsupported DISTRO_VERSION $(DISTRO_BASE_VERSION))
 endif

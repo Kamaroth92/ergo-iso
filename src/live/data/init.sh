@@ -14,6 +14,8 @@ source /work/build_vars.sh
 apt-get update --yes
 apt-get install --yes --no-install-recommends gnupg software-properties-common
 
+
+
 source $FILES_DIR/packages/install.sh
 # source $FILES_DIR/ufw/install.sh # Disabled because it's more hassle than it's worth
 source $FILES_DIR/ergo-binaries/install.sh
@@ -29,3 +31,7 @@ source $FILES_DIR/set-sysctl/install.sh
 source $FILES_DIR/keepalived/install.sh
 source $FILES_DIR/node-exporter/install.sh
 source $FILES_DIR/rke2/install.sh
+source $FILES_DIR/ansible/install.sh
+source $FILES_DIR/intel-gpu-tools/install.sh
+source $FILES_DIR/kexec/install.sh
+source $FILES_DIR/dns/install.sh

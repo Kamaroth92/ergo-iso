@@ -17,7 +17,12 @@ chmod +x $PROVISIONER_PATH/ergo-provisioner.sh
 cp $FILES_DIR/ergo-provisioner/ergo-provisioner.service /etc/systemd/system/ergo-provisioner.service
 systemctl enable ergo-provisioner.service
 
-cp -r $FILES_DIR/ergo-provisioner/uuid-node-map.json $PROVISIONER_FILES/uuid-node-map.json
-cp -r $FILES_DIR/ergo-provisioner/uuid-node-map.json $PROVISIONER_FILES/uuid-node-map.json
+sed -i "s|%WEBSERVER_URL%|$PROVISIONING_CONFIG_WEB_URL|g" $PROVISIONER_PATH/ergo-provisioner.sh
+if [ -f /work/provisioner-config.json ]; then
+  cp /work/provisioner-config.json "$PROVISIONING_CONFIG_EMBEDDED_CHROOT_PATH"
+  sed -i "s|%CONFIG_FILE%|$PROVISIONING_CONFIG_EMBEDDED_CHROOT_PATH|g" $PROVISIONER_PATH/ergo-provisioner.sh
+else
+  sed -i "s|%CONFIG_FILE%||g" $PROVISIONER_PATH/ergo-provisioner.sh
+fi
 
 cp $FILES_DIR/ergo-provisioner/provisioner.d/* $PROVISIONER_CONFIGS

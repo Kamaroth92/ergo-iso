@@ -19,16 +19,13 @@ $(COMMON)/rke2:
 
 	mv "$@.partial" "$@"
 
-.SILENT: $(BUILD)/live/build_vars.sh
+EXPORTED_ENVS := $(shell grep -E '^[A-Z_][A-Z0-9_]* *[:+?]?=' locals.mk | sed -E 's/ *[:+?]?=.*//' | tr '\n' ' ')
+.SILENT: $(BUILD)/build_vars.sh
 $(BUILD)/build_vars.sh:
 	$(SUDO) rm -rf "$@" "$@.partial"
 	$(SUDO) echo "#!/usr/bin/env bash" > "$@.partial"
-	$(SUDO) echo export ADMINISTRATOR_USER_PASSWORD=\''$(ADMINISTRATOR_USER_PASSWORD)'\' >> "$@.partial"
-	$(SUDO) echo export ADMINISTRATOR_SSH_KEY=\''$(ADMINISTRATOR_SSH_KEY)'\' >> "$@.partial"
-	$(SUDO) echo export HARBOR_IMAGE_MIRROR_USERNAME=\''$(HARBOR_IMAGE_MIRROR_USERNAME)'\' >> "$@.partial"
-	$(SUDO) echo export HARBOR_IMAGE_MIRROR_PASSWORD=\''$(HARBOR_IMAGE_MIRROR_PASSWORD)'\' >> "$@.partial"
-	$(SUDO) echo export HARBOR_IMAGE_MIRROR_REGISTRY=\''$(HARBOR_IMAGE_MIRROR_REGISTRY)'\' >> "$@.partial"
-	$(SUDO) echo export DISTRO_BASE_VERSION=\''$(DISTRO_BASE_VERSION)'\' >> "$@.partial"
+	envs=$(grep -E '^[A-Z_][A-Z0-9_]* *[:+?]?=' locals.mk | sed -E 's/ *[:+?]?=.*//' | tr '\n' ' '); \
+	$(foreach var,$(EXPORTED_ENVS),echo "export $(var)='$$(printf '%s' '$($(var))')'" >> "$@.partial";)
 	mv "$@.partial" "$@"
 
 $(BUILD)/live: $(BUILD)/debootstrap $(BUILD)/build_vars.sh common-live # $(COMMON)/rke2/images $(BUILD)/chroot 
@@ -51,14 +48,20 @@ $(BUILD)/live: $(BUILD)/debootstrap $(BUILD)/build_vars.sh common-live # $(COMMO
 	$(SUDO) sed -i 's/ deb/\ndeb/g' "$@.partial/etc/apt/sources.list"
 
 	# Pass build vars
-	mv "$(BUILD)/build_vars.sh" "$@.partial/work/"
+	$(SUDO) mv "$(BUILD)/build_vars.sh" "$@.partial/work/"
 
 	# Create directories and write vars into the filesystem
 	$(SUDO) mkdir -p "$@.partial/work/vars"
+	$(SUDO) chmod 777 "$@.partial/work/vars"
 	$(SUDO) echo -n '$(DISTRO_CODE)' > "$@.partial/work/vars/DISTRO_CODE"
 	$(SUDO) echo -n '$(DISTRO_VERSION)' > "$@.partial/work/vars/DISTRO_VERSION"
 	$(SUDO) echo -n '$(DISTRO_NAME)' > "$@.partial/work/vars/DISTRO_NAME"
 	$(SUDO) echo -n '$(BUILD_TIME)' > "$@.partial/work/vars/BUILD_TIME"
+
+	# Copy over the local provisioner file if it exists
+	if [ -f "${PROVISIONING_CONFIG_EMBEDDED_LOCAL_PATH}" ]; then \
+		$(SUDO) cp "${PROVISIONING_CONFIG_EMBEDDED_LOCAL_PATH}" "$@.partial/work/provisioner-config.json"; \
+	fi
 
 	# Install live packages
 	$(SUDO) $(CHROOT) "$@.partial" /bin/bash -e -c \

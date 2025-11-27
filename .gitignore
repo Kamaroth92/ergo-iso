@@ -2,3 +2,4 @@ locals.mk
 /build
 **/uuid-node-map.json
 notes
+provisioning-server

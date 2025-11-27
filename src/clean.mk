@@ -1,6 +1,8 @@
 clean-live: clean-squashfs
 	scripts/unmount.sh "$(BUILD)/live"
 	$(SUDO) rm -rf $(BUILD)/live
+	scripts/unmount.sh "$(BUILD)/live.partial"
+	$(SUDO) rm -rf $(BUILD)/live.partial
 	$(SUDO) rm -rf $(BUILD)/live.packages
 
 clean-chroot: clean-live
@@ -25,7 +27,6 @@ clean-iso:
 
 clean-common:
 	$(SUDO) rm -rf $(COMMON)
-
 
 clean-all:
 	$(SUDO) rm -rf build

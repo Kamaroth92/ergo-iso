@@ -10,11 +10,16 @@ PACKAGES="
     efibootmgr
     initramfs-tools
     debconf-utils
+    dnsutils
+    traceroute
+    tcpdump
+    net-tools
 "
 
 PACKAGES+="
     nano
     jq
+    iperf3
 "
 
 apt-get update --yes

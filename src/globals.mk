@@ -1,17 +1,3 @@
-# Params
-RKE2_VERSION=v1.29.3-rc2+rke2r1
-
-# Customizable build variables
-DISTRO_CODE?=ergo
-DISTRO_VERSION?=v3.22
-DISTRO_NAME?=Ergo-$(DISTRO_VERSION)
-DISTRO_BASE_VERSION?=24.04
-DISTRO_ARCH?=amd64
-DISTRO_KERNEL_VERSION?=6.11.2
-
-# Apt
-LOCAL_APT_PROXY?=http://192.168.10.26:3142
-
 # Calculated variables
 DISTRO_EPOCH?=$(shell date +%s)
 DISTRO_DATE?=$(shell date +%Y%m%d)
@@ -22,6 +8,7 @@ COMMON=build/common
 
 # Commands
 CHROOT=env -i PATH=/usr/sbin:/usr/bin:/sbin:/bin chroot
+SUDO?=sudo
 
 # ISO
 ISO=$(BUILD)/$(ISO_NAME).iso
@@ -42,5 +29,3 @@ SED=\
 	s|UBUNTU_CODE|$(UBUNTU_CODE)|g; \
 	s|UBUNTU_NAME|$(UBUNTU_NAME)|g; \
 	s|BUILD_TIME|$(BUILD_TIME)|g
-
-SUDO?=sudo

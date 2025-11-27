@@ -18,15 +18,17 @@ fi
 
 ln -sf ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
-if [ -n ${APT_CACHE} ]; then
-	echo Using apt cache: ${APT_CACHE}
-	echo "Acquire::http::Proxy \"${APT_CACHE}\";" >/etc/apt/apt.conf.d/00local-apt-proxy
+if [ ! -n "${APT_CACHE}" ]; then
+	APT_CACHE="false"
 fi
+echo Using apt cache: ${APT_CACHE}
+echo "Acquire::http::Proxy \"${APT_CACHE}\";" >/etc/apt/apt.conf.d/00local-apt-proxy
+echo "Acquire::https::Proxy \"false\";" >>/etc/apt/apt.conf.d/00local-apt-proxy
 
-if [ -n ${FILE} ]; then
+if [ -n "${FILE}" ]; then
 	echo Running file: $FILE
 	source $FILE
-elif [ -n ${COMMAND} ]; then
+elif [ -n "${COMMAND}" ]; then
 	echo Running command: $COMMAND
 	source $COMMAND
 else

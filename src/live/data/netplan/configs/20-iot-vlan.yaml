@@ -8,8 +8,8 @@ network:
       nameservers:
         addresses:
           - 192.168.10.10
-        search:
-          - iot.%DNS_SEARCH_DOMAIN%
+        # search:
+        #   - iot.%DNS_SEARCH_DOMAIN%
       routes:
         - to: default
           via: 192.168.30.1

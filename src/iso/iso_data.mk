@@ -61,7 +61,7 @@ $(BUILD)/iso/md5sum.txt: $(BUILD)/iso_casper.stamp $(BUILD)/iso_data.stamp
 
 $(ISO): $(BUILD)/iso/md5sum.txt
 	sudo rm -f $(ISO)
-	sudo rm "build/build.iso"
+	sudo rm -f "build/build.iso"
 	xorriso -as mkisofs \
 		-J \
 		-isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \

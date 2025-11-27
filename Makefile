@@ -26,7 +26,7 @@ format:
 	shfmt -l -w src scripts deps.sh
 
 include src/debootstrap.mk
-include src/chroot/filesystem.mk
+# include src/chroot/filesystem.mk
 include src/live/filesystem.mk
 include src/iso/squashfs.mk
 include src/iso/iso_data.mk

@@ -20,6 +20,7 @@ FACTORY_RESET=false
 OS_PART_LABEL="ERGO_OS"
 DATA_PART_LABEL="ERGO_DATA"
 DATA_PART_SIZE=10GiB
+DATA_PART_MOUNT="/ergo-data"
 
 MOUNTPOINT="/mnt"
 SQUASHFS_PATH="/cdrom/casper/filesystem.squashfs"
@@ -194,7 +195,7 @@ chroot_configure() {
   
   echo 'UUID=$(blkid -s UUID -o value /dev/${disk}$(disk_name_seperator $disk)3) / ext4 defaults 0 1' > /etc/fstab
   echo 'UUID=$(blkid -s UUID -o value /dev/${disk}$(disk_name_seperator $disk)1) /boot/efi vfat defaults 0 1' >> /etc/fstab
-  echo 'UUID=$(blkid -s UUID -o value /dev/${disk}$(disk_name_seperator $disk)2) /ergo-data ext4 defaults 0 2' >> /etc/fstab
+  echo 'UUID=$(blkid -s UUID -o value /dev/${disk}$(disk_name_seperator $disk)2) $DATA_PART_MOUNT ext4 defaults 0 2' >> /etc/fstab
 
   echo "$hostname" > /etc/hostname
 

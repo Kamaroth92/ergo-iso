@@ -56,10 +56,15 @@ rm -f /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
 cp /tmp/etcd-download-test/{etcd,etcdctl,etcdutl} /usr/local/bin/
 
 echo 'export ETCDCTL_CACERT=/var/lib/rancher/rke2/server/tls/etcd/server-ca.crt' >>/etc/profile.d/rke2.sh
-echo 'export ETCDCTL_CERT=/var/lib/rancher/rke2/server/tls/etcd/server-client.crt' >>/etc/profile.d/rke2.sh
-echo 'export ETCDCTL_KEY=/var/lib/rancher/rke2/server/tls/etcd/server-client.key' >>/etc/profile.d/rke2.sh
+echo 'export ETCDCTL_CERT=/var/lib/rancher/rke2/server/tls/etcd/client.crt' >>/etc/profile.d/rke2.sh
+echo 'export ETCDCTL_KEY=/var/lib/rancher/rke2/server/tls/etcd/client.key' >>/etc/profile.d/rke2.sh
 echo 'export ETCDCTL_ENDPOINTS="https://127.0.0.1:2379"' >>/etc/profile.d/rke2.sh
 echo 'export ETCDCTL_API=3' >>/etc/profile.d/rke2.sh
+
+# Preserve env vars for etcdctl when using sudo
+cat <<EOF >/etc/sudoers.d/etcdctl-env-vars
+Defaults env_keep += "ETCDCTL_ENDPOINTS ETCDCTL_API ETCDCTL_CACERT ETCDCTL_CERT ETCDCTL_KEY"
+EOF
 
 # Register provisioner tasks
 cp $FILES_DIR/rke2/provisioner/* $PROVISIONER_CONFIGS

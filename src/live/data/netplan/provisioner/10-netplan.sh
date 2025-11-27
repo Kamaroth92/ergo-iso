@@ -4,6 +4,7 @@ netplan_config_dir=/etc/netplan
 
 if [ -z "$VAR_ipAddress" ]; then
 	rm $netplan_config_dir/10-primary.yaml
+	rm $netplan_config_dir/20-iot-vlan.yaml
 else
 	sed -i "s|%IPADDRESS_1%|$VAR_ipAddress|g" $netplan_config_dir/10-primary.yaml
 	sed -i "s|%INTERFACE_1%|$VAR_keepalivedInterface|g" $netplan_config_dir/10-primary.yaml

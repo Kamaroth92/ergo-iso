@@ -51,7 +51,8 @@ net.ipv4.ip_forward=1
 fs.inotify.max_user_instances=8192
 fs.inotify.max_user_watches=1048576
 
-# disable ipv6
+# enable ipv6
 net.ipv6.conf.all.disable_ipv6 = 0
 net.ipv6.conf.default.disable_ipv6 = 0
+net.ipv6.conf.lo.disable_ipv6 = 0
 EOF

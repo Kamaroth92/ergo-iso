@@ -1,0 +1,11 @@
+[Unit]
+Description=Set ring buffer sizes for enp1s0
+After=network-pre.target
+Before=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/ethtool -G enp1s0 rx 8192 tx 8192
+
+[Install]
+WantedBy=multi-user.target

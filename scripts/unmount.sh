@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 CHROOT="$(realpath "$1")"
-
+echo "Unmounting "$CHROOT" directories"
 if [ -d "$CHROOT" ]; then
 	if [ -n "$(mount | grep "$CHROOT")" ]; then
 		sudo umount "$CHROOT/dev" || sudo umount -lf "$CHROOT/dev" || true

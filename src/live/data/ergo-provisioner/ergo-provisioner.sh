@@ -2,6 +2,8 @@
 
 PROVISIONER_PATH=/ergo/provisioner
 PROVISIONER_FILES=$PROVISIONER_PATH/files
+JSON=%CONFIG_FILE%
+WEBSERVER_URL=%WEBSERVER_URL%
 
 export UUID=$(dmidecode -s system-uuid)
 
@@ -10,7 +12,14 @@ if [[ -z "$UUID" ]]; then
 	exit 1
 fi
 
-JSON=$PROVISIONER_FILES/uuid-node-map.json
+RESPONSE=$(curl -s --max-time 3 "$WEBSERVER_URL")
+if echo "$RESPONSE" | jq -e .globals > /dev/null 2>&1; then
+	echo "Using config from $WEBSERVER_URL"
+	JSON=$PROVISIONER_FILES/config.json
+	$RESPONSE > $JSON
+else
+	echo "Error: Response from $WEBSERVER_URL is not valid JSON."
+fi
 
 if [[ ! -f "$JSON" ]]; then
 	echo "Error: $JSON does not exist."
