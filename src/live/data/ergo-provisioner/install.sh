@@ -25,4 +25,13 @@ else
   sed -i "s|%CONFIG_FILE%||g" $PROVISIONER_PATH/ergo-provisioner.sh
 fi
 
+if ! mount | grep -q 'upperdir=/cow/upper'; then
+	echo "Not running in live environment"
+	ERGO_IS_LIVE_ENV=0
+else
+  echo "Running in live environment"
+  ERGO_IS_LIVE_ENV=1
+fi
+echo "export ERGO_IS_LIVE_ENV=$IS_LIVE_ENV" >>/etc/profile.d/ergo.sh
+
 cp $FILES_DIR/ergo-provisioner/provisioner.d/* $PROVISIONER_CONFIGS

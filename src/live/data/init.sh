@@ -34,4 +34,4 @@ source $FILES_DIR/rke2/install.sh
 source $FILES_DIR/ansible/install.sh
 source $FILES_DIR/intel-gpu-tools/install.sh
 source $FILES_DIR/kexec/install.sh
-source $FILES_DIR/dns/install.sh
+# source $FILES_DIR/dns/install.sh

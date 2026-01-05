@@ -1,0 +1,10 @@
+[Unit]
+Description=Attempt to join existing Technitium server
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+AccuracySec=10s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

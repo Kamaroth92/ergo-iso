@@ -1,3 +1,0 @@
-#!/bin/sh
-
-printf "\n$(cat /etc/update-motd.d/logo.asc)\n"

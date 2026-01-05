@@ -62,6 +62,8 @@ $(BUILD)/iso/md5sum.txt: $(BUILD)/iso_casper.stamp $(BUILD)/iso_data.stamp
 $(ISO): $(BUILD)/iso/md5sum.txt
 	sudo rm -f $(ISO)
 	sudo rm -f "build/build.iso"
+	sudo rm -f "build/$(ISO_NAME).iso"
+	
 	xorriso -as mkisofs \
 		-J \
 		-isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
@@ -76,3 +78,4 @@ $(ISO): $(BUILD)/iso/md5sum.txt
 
 	mv "$@.partial" "$@"
 	ln "$@" "build/build.iso"
+	ln "$@" "build/$(ISO_NAME).iso"
